@@ -1,0 +1,1302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Witkowski Capital | Capital W Holdings LLC</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --white: #ffffff;
+            --off-white: #fafafa;
+            --light-gray: #f5f5f5;
+            --mid-gray: #e0e0e0;
+            --text-gray: #888888;
+            --text-dark: #1a1a1a;
+            --text-medium: #4a4a4a;
+            --accent: #2a2a2a;
+            --accent-hover: #000000;
+            --serif: 'Cormorant Garamond', Georgia, serif;
+            --sans: 'Instrument Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--sans);
+            background: var(--white);
+            color: var(--text-dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        ::selection {
+            background: var(--text-dark);
+            color: var(--white);
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            padding: 1.5rem 4rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid transparent;
+            transition: border-color 0.3s ease;
+        }
+
+        nav.scrolled {
+            border-bottom-color: var(--mid-gray);
+        }
+
+        .logo {
+            font-family: var(--serif);
+            font-size: 1.25rem;
+            font-weight: 400;
+            letter-spacing: 0.02em;
+            color: var(--text-dark);
+            text-decoration: none;
+        }
+
+        .logo span {
+            font-weight: 600;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--text-medium);
+            text-decoration: none;
+            letter-spacing: 0.03em;
+            text-transform: uppercase;
+            transition: color 0.2s ease;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--text-dark);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--text-dark);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 8rem 4rem 4rem;
+            position: relative;
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 6rem;
+            align-items: center;
+            max-width: 1400px;
+        }
+
+        .hero-content {
+            max-width: 700px;
+        }
+
+        .hero-eyebrow {
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--text-gray);
+            margin-bottom: 2rem;
+            opacity: 0;
+            animation: fadeUp 0.8s ease 0.2s forwards;
+        }
+
+        .hero-title {
+            font-family: var(--serif);
+            font-size: clamp(3rem, 8vw, 5.5rem);
+            font-weight: 300;
+            line-height: 1.05;
+            letter-spacing: -0.02em;
+            margin-bottom: 2rem;
+            opacity: 0;
+            animation: fadeUp 0.8s ease 0.4s forwards;
+        }
+
+        .hero-title em {
+            font-style: italic;
+            font-weight: 300;
+        }
+
+        .hero-subtitle {
+            font-size: 1.125rem;
+            color: var(--text-medium);
+            max-width: 560px;
+            line-height: 1.7;
+            opacity: 0;
+            animation: fadeUp 0.8s ease 0.6s forwards;
+        }
+
+        .hero-cta {
+            margin-top: 3rem;
+            display: flex;
+            gap: 1.5rem;
+            opacity: 0;
+            animation: fadeUp 0.8s ease 0.8s forwards;
+        }
+
+        .hero-image {
+            opacity: 0;
+            animation: fadeIn 1s ease 0.6s forwards;
+            position: relative;
+        }
+
+        .hero-image::before {
+            content: '';
+            position: absolute;
+            top: -20px;
+            right: -20px;
+            width: 100%;
+            height: 100%;
+            border: 1px solid var(--mid-gray);
+            z-index: -1;
+        }
+
+        .hero-image img {
+            width: 100%;
+            max-width: 420px;
+            height: auto;
+            filter: grayscale(100%);
+            transition: filter 0.5s ease;
+        }
+
+        .hero-image:hover img {
+            filter: grayscale(0%);
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 2rem;
+            font-family: var(--sans);
+            font-size: 0.85rem;
+            font-weight: 500;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            text-decoration: none;
+            border: 1px solid var(--text-dark);
+            background: transparent;
+            color: var(--text-dark);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            background: var(--text-dark);
+            color: var(--white);
+        }
+
+        .btn-primary {
+            background: var(--text-dark);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-hover);
+        }
+
+        .btn svg {
+            width: 16px;
+            height: 16px;
+            transition: transform 0.3s ease;
+        }
+
+        .btn:hover svg {
+            transform: translateX(4px);
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 3rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            opacity: 0;
+            animation: fadeIn 1s ease 1.2s forwards;
+        }
+
+        .scroll-line {
+            width: 1px;
+            height: 60px;
+            background: linear-gradient(to bottom, var(--text-dark), transparent);
+            animation: scrollPulse 2s ease infinite;
+        }
+
+        /* Section Styles */
+        section {
+            padding: 8rem 4rem;
+        }
+
+        .section-header {
+            margin-bottom: 4rem;
+        }
+
+        .section-number {
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.2em;
+            color: var(--text-gray);
+            margin-bottom: 1rem;
+        }
+
+        .section-title {
+            font-family: var(--serif);
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 400;
+            letter-spacing: -0.01em;
+        }
+
+        /* Stats Section - Cooler version */
+        #stats {
+            background: var(--white);
+            padding: 6rem 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .stat-card {
+            padding: 4rem 3rem;
+            text-align: center;
+            position: relative;
+            border-right: 1px solid var(--mid-gray);
+            transition: all 0.4s ease;
+        }
+
+        .stat-card:last-child {
+            border-right: none;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 3px;
+            background: var(--text-dark);
+            transition: width 0.4s ease;
+        }
+
+        .stat-card:hover::before {
+            width: 60%;
+        }
+
+        .stat-card:hover {
+            background: var(--off-white);
+        }
+
+        .stat-icon {
+            width: 56px;
+            height: 56px;
+            margin: 0 auto 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid var(--mid-gray);
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover .stat-icon {
+            background: var(--text-dark);
+            border-color: var(--text-dark);
+        }
+
+        .stat-card:hover .stat-icon svg {
+            color: var(--white);
+        }
+
+        .stat-icon svg {
+            width: 24px;
+            height: 24px;
+            color: var(--text-dark);
+            transition: color 0.3s ease;
+        }
+
+        .stat-number {
+            font-family: var(--serif);
+            font-size: 5rem;
+            font-weight: 300;
+            color: var(--text-dark);
+            line-height: 1;
+            margin-bottom: 0.5rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .stat-number .plus {
+            font-size: 3rem;
+            position: absolute;
+            top: 0;
+            right: -1.5rem;
+            color: var(--text-gray);
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            color: var(--text-medium);
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            margin-bottom: 1rem;
+        }
+
+        .stat-description {
+            font-size: 0.9rem;
+            color: var(--text-gray);
+            max-width: 220px;
+            margin: 0 auto;
+            line-height: 1.5;
+        }
+
+        /* Portfolio Section */
+        #portfolio {
+            background: var(--off-white);
+        }
+
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+        }
+
+        .portfolio-card {
+            background: var(--white);
+            padding: 3rem;
+            border: 1px solid var(--mid-gray);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .portfolio-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--text-dark);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s ease;
+        }
+
+        .portfolio-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
+        }
+
+        .portfolio-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .portfolio-icon {
+            width: 48px;
+            height: 48px;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--light-gray);
+            border-radius: 8px;
+        }
+
+        .portfolio-icon svg {
+            width: 24px;
+            height: 24px;
+            color: var(--text-dark);
+        }
+
+        .portfolio-card h3 {
+            font-family: var(--serif);
+            font-size: 1.75rem;
+            font-weight: 400;
+            margin-bottom: 0.5rem;
+        }
+
+        .portfolio-card .url {
+            font-size: 0.85rem;
+            color: var(--text-gray);
+            margin-bottom: 1.5rem;
+        }
+
+        .portfolio-card p {
+            color: var(--text-medium);
+            line-height: 1.7;
+            margin-bottom: 2rem;
+        }
+
+        .portfolio-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--text-dark);
+            text-decoration: none;
+            letter-spacing: 0.03em;
+            text-transform: uppercase;
+        }
+
+        .portfolio-link svg {
+            width: 14px;
+            height: 14px;
+            transition: transform 0.3s ease;
+        }
+
+        .portfolio-link:hover svg {
+            transform: translate(4px, -4px);
+        }
+
+        /* Tools Section */
+        #tools {
+            background: var(--white);
+        }
+
+        .tools-intro {
+            max-width: 600px;
+            color: var(--text-medium);
+            line-height: 1.8;
+            margin-bottom: 4rem;
+        }
+
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1px;
+            background: var(--mid-gray);
+            border: 1px solid var(--mid-gray);
+        }
+
+        .tool-item {
+            background: var(--white);
+            padding: 2.5rem;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .tool-item:hover {
+            background: var(--off-white);
+        }
+
+        .tool-category {
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--text-gray);
+            margin-bottom: 1rem;
+        }
+
+        .tool-item h4 {
+            font-family: var(--serif);
+            font-size: 1.25rem;
+            font-weight: 400;
+            margin-bottom: 0.75rem;
+        }
+
+        .tool-item p {
+            font-size: 0.9rem;
+            color: var(--text-medium);
+            line-height: 1.6;
+        }
+
+        /* Author Section */
+        #author {
+            background: var(--text-dark);
+            color: var(--white);
+        }
+
+        #author .section-number {
+            color: var(--text-gray);
+        }
+
+        #author .section-title {
+            color: var(--white);
+        }
+
+        .author-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6rem;
+            align-items: center;
+        }
+
+        .author-text h3 {
+            font-family: var(--serif);
+            font-size: 2rem;
+            font-weight: 300;
+            font-style: italic;
+            margin-bottom: 2rem;
+            line-height: 1.4;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .author-text p {
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+
+        .author-text .btn {
+            border-color: rgba(255, 255, 255, 0.3);
+            color: var(--white);
+            margin-top: 1rem;
+        }
+
+        .author-text .btn:hover {
+            background: var(--white);
+            color: var(--text-dark);
+            border-color: var(--white);
+        }
+
+        .book-visual {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .book-image-container {
+            position: relative;
+            transition: transform 0.4s ease;
+        }
+
+        .book-image-container:hover {
+            transform: translateY(-8px) rotate(-2deg);
+        }
+
+        .book-image-container::before {
+            content: '';
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            height: 20px;
+            background: rgba(0, 0, 0, 0.3);
+            filter: blur(15px);
+            border-radius: 50%;
+        }
+
+        .book-image {
+            max-width: 280px;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
+            border-radius: 4px;
+        }
+
+        .amazon-badge {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        /* About Section */
+        #about {
+            background: var(--off-white);
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 3rem;
+            max-width: 800px;
+        }
+
+        .about-text p {
+            color: var(--text-medium);
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+
+        .about-text p:first-of-type {
+            font-size: 1.125rem;
+            color: var(--text-dark);
+        }
+
+        /* Contact Section */
+        #contact {
+            background: var(--white);
+            padding: 8rem 4rem;
+        }
+
+        .contact-container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        #contact .section-header {
+            text-align: center;
+        }
+
+        #contact .section-title {
+            font-size: clamp(2.5rem, 5vw, 3.5rem);
+            margin-bottom: 1rem;
+        }
+
+        #contact .intro-text {
+            color: var(--text-medium);
+            text-align: center;
+            margin-bottom: 3rem;
+            line-height: 1.7;
+        }
+
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .form-group label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--text-medium);
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            padding: 1rem;
+            font-family: var(--sans);
+            font-size: 1rem;
+            border: 1px solid var(--mid-gray);
+            background: var(--white);
+            color: var(--text-dark);
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            outline: none;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            border-color: var(--text-dark);
+            box-shadow: 0 0 0 3px rgba(26, 26, 26, 0.05);
+        }
+
+        .form-group textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .form-group select {
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23888' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+        }
+
+        .submit-btn {
+            align-self: flex-start;
+            padding: 1.25rem 3rem;
+            margin-top: 1rem;
+        }
+
+        .form-note {
+            font-size: 0.8rem;
+            color: var(--text-gray);
+            text-align: center;
+            margin-top: 1.5rem;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--text-dark);
+            color: var(--white);
+            padding: 4rem;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-logo {
+            font-family: var(--serif);
+            font-size: 1.25rem;
+            font-weight: 400;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .footer-links a {
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.6);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--white);
+        }
+
+        .footer-copy {
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        /* Animations */
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes scrollPulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        /* Scroll Animations */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            nav {
+                padding: 1.5rem 2rem;
+            }
+
+            section {
+                padding: 6rem 2rem;
+            }
+
+            .hero {
+                padding: 8rem 2rem 4rem;
+            }
+
+            .hero-grid {
+                grid-template-columns: 1fr;
+                gap: 4rem;
+            }
+
+            .hero-image {
+                order: -1;
+                text-align: center;
+            }
+
+            .hero-image img {
+                max-width: 300px;
+            }
+
+            .portfolio-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .tools-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .author-content {
+                grid-template-columns: 1fr;
+                gap: 4rem;
+            }
+
+            .book-visual {
+                order: -1;
+            }
+
+            .stats-container {
+                grid-template-columns: 1fr;
+            }
+
+            .stat-card {
+                border-right: none;
+                border-bottom: 1px solid var(--mid-gray);
+                padding: 3rem 2rem;
+            }
+
+            .stat-card:last-child {
+                border-bottom: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .tools-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-cta {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .submit-btn {
+                width: 100%;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                gap: 2rem;
+                text-align: center;
+            }
+
+            .footer-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav id="navbar">
+        <a href="#" class="logo">Capital <span>W</span></a>
+        <ul class="nav-links">
+            <li><a href="#portfolio">Portfolio</a></li>
+            <li><a href="#tools">Tools</a></li>
+            <li><a href="#author">Author</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="hero-grid">
+            <div class="hero-content">
+                <p class="hero-eyebrow">Capital W Holdings LLC</p>
+                <h1 class="hero-title">Jesse Witkowski</h1>
+                <p class="hero-subtitle">
+                    Founder, builder, author. Creating infrastructure for the private capital markets 
+                    and developing tools that bridge the gap between human potential and artificial intelligence.
+                </p>
+                <div class="hero-cta">
+                    <a href="#portfolio" class="btn btn-primary">
+                        View Portfolio
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                        </svg>
+                    </a>
+                    <a href="#author" class="btn">Read the Book</a>
+                </div>
+            </div>
+            <div class="hero-image">
+                <img src="https://i.ibb.co/TBtnbfZB/Jesse-Witkowski-Headshot-7-28-25.jpg" alt="Jesse Witkowski">
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <div class="scroll-line"></div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section id="stats">
+        <div class="stats-container reveal">
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
+                    </svg>
+                </div>
+                <div class="stat-number">2</div>
+                <p class="stat-label">Portfolio Companies</p>
+                <p class="stat-description">Building infrastructure for private capital markets</p>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                    </svg>
+                </div>
+                <div class="stat-number">10<span class="plus">+</span></div>
+                <p class="stat-label">Tools Built</p>
+                <p class="stat-description">Purpose-built applications for capital markets & AI</p>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                    </svg>
+                </div>
+                <div class="stat-number">6→1</div>
+                <p class="stat-label">Month to Week</p>
+                <p class="stat-description">Compressing development cycles with AI-augmented building</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio -->
+    <section id="portfolio">
+        <div class="section-header reveal">
+            <p class="section-number">01</p>
+            <h2 class="section-title">Portfolio Companies</h2>
+        </div>
+        <div class="portfolio-grid">
+            <div class="portfolio-card reveal">
+                <div class="portfolio-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
+                    </svg>
+                </div>
+                <h3>Deal Flow Xchange</h3>
+                <p class="url">uedfx.com</p>
+                <p>
+                    A private capital coordination platform connecting founders with investors globally. 
+                    Streamlining deal flow, due diligence, and capital deployment across borders.
+                </p>
+                <a href="https://uedfx.com" class="portfolio-link" target="_blank" rel="noopener">
+                    Visit Platform
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 17L17 7M17 7H7M17 7v10"/>
+                    </svg>
+                </a>
+            </div>
+            <div class="portfolio-card reveal">
+                <div class="portfolio-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                    </svg>
+                </div>
+                <h3>Velocity House</h3>
+                <p class="url">velocity.house</p>
+                <p>
+                    High-velocity venture building and strategic acceleration. 
+                    Transforming ambitious ideas into market-ready ventures through rapid iteration and focused execution.
+                </p>
+                <a href="https://velocity.house" class="portfolio-link" target="_blank" rel="noopener">
+                    Visit Platform
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 17L17 7M17 7H7M17 7v10"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tools -->
+    <section id="tools">
+        <div class="section-header reveal">
+            <p class="section-number">02</p>
+            <h2 class="section-title">Built Tools</h2>
+        </div>
+        <p class="tools-intro reveal">
+            A collection of purpose-built applications developed to solve specific problems in 
+            private capital markets, investor relations, and AI-augmented workflows.
+        </p>
+        <div class="tools-grid reveal">
+            <div class="tool-item">
+                <p class="tool-category">Investor Intelligence</p>
+                <h4>Due Diligence Analyzer</h4>
+                <p>Comprehensive research and analysis platform for evaluating investment opportunities.</p>
+            </div>
+            <div class="tool-item">
+                <p class="tool-category">Investor Intelligence</p>
+                <h4>Call Preparation Platform</h4>
+                <p>AI-powered briefing system for investor meetings and capital raise conversations.</p>
+            </div>
+            <div class="tool-item">
+                <p class="tool-category">Network Mapping</p>
+                <h4>Network Nucleus</h4>
+                <p>WhatsApp intelligence extraction and relationship mapping for deal flow optimization.</p>
+            </div>
+            <div class="tool-item">
+                <p class="tool-category">Financial Modeling</p>
+                <h4>Projection Engine</h4>
+                <p>Dynamic financial modeling and scenario analysis for founders and investors.</p>
+            </div>
+            <div class="tool-item">
+                <p class="tool-category">Deal Flow</p>
+                <h4>Capital Coordination Dashboard</h4>
+                <p>Real-time deal tracking and investor relationship management system.</p>
+            </div>
+            <div class="tool-item">
+                <p class="tool-category">Productivity</p>
+                <h4>AI Development Framework</h4>
+                <p>Systematic approach to compressing 6-month builds into week-long sprints.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Author -->
+    <section id="author">
+        <div class="section-header reveal">
+            <p class="section-number">03</p>
+            <h2 class="section-title">Published Work</h2>
+        </div>
+        <div class="author-content">
+            <div class="author-text reveal">
+                <h3>"The future isn't about competing with AI—it's about understanding how to thrive alongside it."</h3>
+                <p>
+                    The Thriving in the Age of AGI series explores the intersection of human potential 
+                    and artificial general intelligence. A practical guide for founders, executives, 
+                    and professionals navigating the most significant technological shift in human history.
+                </p>
+                <p>
+                    Drawing from firsthand experience building AI-augmented businesses and developing 
+                    sophisticated applications in compressed timeframes, these books provide actionable 
+                    frameworks for leveraging AI as a force multiplier.
+                </p>
+                <a href="https://www.amazon.com/Entrepreneurial-Golden-Window-Thriving-Age-ebook/dp/B0FR69J4N8/ref=sr_1_4?dib=eyJ2IjoiMSJ9.2VOCa_pbfli5bcunIAWT1hf9f0Vx6KN7TCdQ1NQ0VJLBbTQ85TrvvC16n72KhjI_.tnhKeDIxSw5WxbP5GfaOAWIy47ce1jrCrz1gFpw4RkY&dib_tag=se&keywords=Thriving+in+the+Age+of+AGI+Jesse+Witkowski&nsdOptOutParam=true&qid=1768252987&sr=8-4" class="btn" target="_blank" rel="noopener">
+                    Available on Amazon
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 17L17 7M17 7H7M17 7v10"/>
+                    </svg>
+                </a>
+            </div>
+            <div class="book-visual reveal">
+                <div class="book-image-container">
+                    <img src="https://i.ibb.co/TBPC7nWD/61-SLebm-J2-KL-SY522.jpg" alt="Thriving in the Age of AGI" class="book-image">
+                </div>
+                <div class="amazon-badge">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                    </svg>
+                    Available on Amazon
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About -->
+    <section id="about">
+        <div class="section-header reveal">
+            <p class="section-number">04</p>
+            <h2 class="section-title">About</h2>
+        </div>
+        <div class="about-content">
+            <div class="about-text reveal">
+                <p>
+                    Capital W Holdings represents the culmination of a decade spent at the intersection 
+                    of technology, finance, and entrepreneurship.
+                </p>
+                <p>
+                    As the founder and CEO of Deal Flow Xchange, I've built infrastructure that connects 
+                    founders with capital across global markets. The private capital ecosystem is 
+                    fragmented—my work is focused on creating the coordination layer that enables 
+                    better matches between great founders and aligned investors.
+                </p>
+                <p>
+                    My approach to building is defined by velocity. By leveraging AI as a development 
+                    partner, I've consistently compressed traditional 6-month software projects into 
+                    week-long builds. This isn't about cutting corners—it's about understanding how 
+                    to use modern tools to their full potential.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact">
+        <div class="contact-container">
+            <div class="section-header reveal">
+                <p class="section-number">05</p>
+                <h2 class="section-title">Let's Connect</h2>
+            </div>
+            <p class="intro-text reveal">
+                Interested in collaboration, investment opportunities, or discussing 
+                the future of AI-augmented building? I'd like to hear from you.
+            </p>
+            <form class="contact-form reveal" action="https://formsubmit.co/jessepwitkowski@gmail.com" method="POST">
+                <input type="hidden" name="_subject" value="New Contact from Witkowski Capital">
+                <input type="hidden" name="_captcha" value="false">
+                <input type="hidden" name="_template" value="table">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" id="name" name="name" required placeholder="Your name">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required placeholder="your@email.com">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="interest">Area of Interest</label>
+                    <select id="interest" name="interest" required>
+                        <option value="" disabled selected>Select an option</option>
+                        <option value="investment">Investment Opportunities</option>
+                        <option value="collaboration">Collaboration</option>
+                        <option value="consulting">Consulting</option>
+                        <option value="speaking">Speaking Engagement</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <textarea id="message" name="message" required placeholder="Tell me about your project or inquiry..."></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary submit-btn">
+                    Send Message
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                    </svg>
+                </button>
+                <p class="form-note">I typically respond within 24-48 hours.</p>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <p class="footer-logo">Capital W Holdings LLC</p>
+            <div class="footer-links">
+                <a href="https://uedfx.com" target="_blank" rel="noopener">DFX</a>
+                <a href="https://velocity.house" target="_blank" rel="noopener">Velocity House</a>
+                <a href="https://www.amazon.com/Entrepreneurial-Golden-Window-Thriving-Age-ebook/dp/B0FR69J4N8/ref=sr_1_4?dib=eyJ2IjoiMSJ9.2VOCa_pbfli5bcunIAWT1hf9f0Vx6KN7TCdQ1NQ0VJLBbTQ85TrvvC16n72KhjI_.tnhKeDIxSw5WxbP5GfaOAWIy47ce1jrCrz1gFpw4RkY&dib_tag=se&keywords=Thriving+in+the+Age+of+AGI+Jesse+Witkowski&nsdOptOutParam=true&qid=1768252987&sr=8-4" target="_blank" rel="noopener">Book</a>
+            </div>
+            <p class="footer-copy">© 2026 Capital W Holdings LLC. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Navbar scroll effect
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Scroll reveal animation
+        const reveals = document.querySelectorAll('.reveal');
+        const revealOnScroll = () => {
+            reveals.forEach(el => {
+                const windowHeight = window.innerHeight;
+                const elementTop = el.getBoundingClientRect().top;
+                const elementVisible = 150;
+
+                if (elementTop < windowHeight - elementVisible) {
+                    el.classList.add('active');
+                }
+            });
+        };
+
+        window.addEventListener('scroll', revealOnScroll);
+        revealOnScroll(); // Initial check
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const href = this.getAttribute('href');
+                if (href === '#') {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                    return;
+                }
+                const target = document.querySelector(href);
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
